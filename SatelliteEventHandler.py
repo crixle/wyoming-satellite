@@ -34,8 +34,14 @@ class SatelliteEventHandler(AsyncEventHandler):
         self.client_id = str(time.monotonic_ns())
         _LOGGER.debug("Client connected: %s", self.client_id)
 
+
     async def handle_event(self, event: Event) -> bool:
         _LOGGER.debug(event)
+        def send_event(payload):
+            try:
+                response = requests.post(event_url, headers=headers, data=payload)
+            except:
+                print("Can't connect to Flask")
 
         match event.type:
             case "detection":
@@ -43,26 +49,28 @@ class SatelliteEventHandler(AsyncEventHandler):
                 payload = json.dumps({
                     event.type: event.data['name']
                 })
-                response = requests.post(event_url, headers=headers, data=payload)
-                print(response.text)
+                send_event(payload)
             case "transcript":
                 _LOGGER.info(f"User said: {event.data['text']}") # Print speech-to-text phrase
                 payload = json.dumps({
                     event.type: event.data['text']
                 })
-                response = requests.post(event_url, headers=headers, data=payload)
+                send_event(payload)
             case "synthesize":
                 _LOGGER.info(f"Assist responded: {event.data['text']}") # Print response text
                 payload = json.dumps({
                     event.type: event.data['text']
                 })
-                response = requests.post(event_url, headers=headers, data=payload)
+                send_event(payload)
             case "played":
                 _LOGGER.info("Response finished.")
                 payload = json.dumps({
                     "response_finished": True
                 })
-                response = requests.post(event_url, headers=headers, data=payload)
+                send_event(payload)
+            case _:
+                print(event)
+                
 
 
         return True
