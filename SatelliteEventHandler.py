@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Accepts event data and transmits it in a Flask friendly way"""
+"""
+
+Accepts event data and transmits it in a Flask friendly way
+START THIS SCRIPT BEFORE RUNNING THE SATELLITE
+
+"""
 import argparse
 import asyncio
 import logging
 import time
-import threading
+import requests
 from functools import partial
 from queue import Queue
 from flask import Flask, jsonify, render_template_string
@@ -12,6 +17,11 @@ from wyoming.event import Event
 from wyoming.server import AsyncEventHandler, AsyncServer
 
 import json
+
+event_url = "http://localhost:1212/event"
+headers = {
+    'Content-Type': 'application/json'
+}
 
 _LOGGER = logging.getLogger()
 
@@ -28,14 +38,31 @@ class SatelliteEventHandler(AsyncEventHandler):
         _LOGGER.debug(event)
 
         match event.type:
+            case "detection":
+                _LOGGER.info(f"Detected wake word: {event.data['name']}") # Print wake word
+                payload = json.dumps({
+                    event.type: event.data['name']
+                })
+                response = requests.post(event_url, headers=headers, data=payload)
+                print(response.text)
             case "transcript":
-                print(f"User said: {event[0]['text']}")
-
-        print(f"{event.type}: {event_data}")
-
-        if event.type == "detect" and event.data:
-            print(f"Detected wake word: {event.data.get('name')}")
-
+                _LOGGER.info(f"User said: {event.data['text']}") # Print speech-to-text phrase
+                payload = json.dumps({
+                    event.type: event.data['text']
+                })
+                response = requests.post(event_url, headers=headers, data=payload)
+            case "synthesize":
+                _LOGGER.info(f"Assist responded: {event.data['text']}") # Print response text
+                payload = json.dumps({
+                    event.type: event.data['text']
+                })
+                response = requests.post(event_url, headers=headers, data=payload)
+            case "played":
+                _LOGGER.info("Response finished.")
+                payload = json.dumps({
+                    "response_finished": True
+                })
+                response = requests.post(event_url, headers=headers, data=payload)
 
 
         return True

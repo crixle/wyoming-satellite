@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask import render_template
 import jyserver.Flask as jsf
-import asyncio
 
 app = Flask(__name__)
 
@@ -17,28 +16,20 @@ class App:
     def postSatelliteListeningStart(self):
         print(self.js.satelliteListeningStart())
 
-@app.route('/', methods=['POST'])
+@app.route('/event', methods=['POST'])
 def handle_post():
-    # Check if the request has JSON data
-    print("AHHHHHHHH")
-    if request.is_json:
-        # Parse JSON data
-        data = request.get_json()
-        
-        # Process the data (e.g., print or manipulate it)
-        if "userInquiry" in data:
-            print("Received JSON data:", data['userInquiry'])
-            App.postUserInquiry(data['userInquiry'])
-        if "assistantResponse" in data:
-            print("Received JSON data:", data['assistantResponse'])
-            App.postAssistantResponse(data['assistantResponse'])
-        if "satelliteListening" in data:
-            App.postSatelliteListeningStart()
-        
-        # Example response
-        return jsonify({"message": "Data received", "data": data}), 200
-    else:
-        return jsonify({"message": "Invalid input, expected JSON"}), 400
+    try:
+        raw_data = request.data.decode('utf-8')
+        print("Raw body:", raw_data)
+
+        json_data = request.get_json()
+        print("Parsed JSON:", json_data)
+
+        return jsonify({"received": json_data}), 200
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"error": str(e)}), 400
+
 
 @app.route('/')
 def index():
