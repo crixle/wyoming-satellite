@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>AssistHub Web</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='animations.css') }}">
+    </head>
+    <body onload="displayTime()">
+        <script src="{{ url_for('static', filename='javascript.js') }}"></script>
+        <div id="mainWrapper">
+            <div id="bottomContent">
+                <div id="satelliteStatus">
+                </div>
+                <div id="dialogueBoxes">
+                    <div id="userRequestTextBox">Long sentence request</div>
+                    <div id="assistantResponse">Here's the response</div>
+                </div>
+                <div id="time"></div>
+            </div>
+        </div>
+    </body>
+</html>
+

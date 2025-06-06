@@ -13,6 +13,5 @@ ip=$(ipconfig getifaddr en0)
 echo "Add Wyoming Satellite integration in Home Assistant with: $ip:10700"
 echo "WARNING: If this errors out, delete the .venv folder if it exists and restart this script."
 
-script/run --name "AssistHub" --uri "tcp://0.0.0.0:10700" --mic-command "rec -q -c 1 -b 16 -e signed-integer -t raw - rate 16000" --snd-command "play -q -r 22050 -c 1 -b 16 -e signed-integer -t raw -" &
+script/run --name "AssistHub" --uri "tcp://0.0.0.0:10700" --mic-command "rec -q -c 1 -b 16 -e signed-integer -t raw - rate 16000" --snd-command "play -q -r 22050 -c 1 -b 16 -e signed-integer -t raw -" --event-uri "tcp://127.0.0.1:8675" &
 
-echo "TEST" &

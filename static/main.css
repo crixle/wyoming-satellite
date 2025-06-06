@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* Define the fade-in animation */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  
+
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("background1.jpg");
+}
+
+#time {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 5px black;
+    font-family: "Figtree";
+    place-self: center;
+}
+
+#bottomContent {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    width: calc(100vw - 30px);
+    margin: 0 auto;
+}
+
+#mainWrapper {
+    position: absolute;
+    bottom: 3rem;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+#userRequestTextBox {
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.75rem;
+    font-family: "Figtree";
+    display: flex;
+    height: 3rem;
+    display: none;
+    transition: width 2s;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#assistantResponse {
+    animation: fadeIn .5s linear; 
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.75rem;
+    font-family: "Figtree";
+    display: flex;
+    margin-top: 15px;
+    height: 3rem;
+    display: none;
+    transition: width 2s;
+    background: rgb(91, 219, 255);
+    padding: 5px 10px;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    color: white;
+    text-shadow: 0 0 3px black;
+}
+
+#satelliteStatus {
+    place-self: center;
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.75rem;
+    font-family: "Figtree";
+    aspect-ratio: 1/1;
+    margin-right: 50px;
+    height: 3rem;
+    transition: width 2s;
+    background: white;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

@@ -35,6 +35,18 @@ subprocess.check_call(
     ]
 )
 
+subprocess.check_call(
+    pip
+    + [
+        "install",
+        "flask",
+        "jyserver",
+        "websockets",
+        "requests",
+        str(_PROGRAM_DIR),
+    ]
+)
+
 if args.dev:
     # Install dev requirements
     subprocess.check_call(

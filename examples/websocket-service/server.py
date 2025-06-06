@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger()
 async def main() -> None:
     """Main entry point."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--uri", required=True, help="unix:// or tcp://")
+    parser.add_argument("--uri", help="unix:// or tcp://", default="tcp://0.0.0.0:8675")
     parser.add_argument("--websocket-host", default="localhost")
     parser.add_argument("--websocket-port", type=int, default=8675)
     #
