@@ -47,25 +47,35 @@ class SatelliteEventHandler(AsyncEventHandler):
             case "detection":
                 _LOGGER.info(f"Detected wake word: {event.data['name']}") # Print wake word
                 payload = json.dumps({
-                    event.type: event.data['name']
+                    "event": event.type,
+                    "data": event.data['name']
                 })
                 send_event(payload)
             case "transcript":
                 _LOGGER.info(f"User said: {event.data['text']}") # Print speech-to-text phrase
                 payload = json.dumps({
-                    event.type: event.data['text']
+                    "event": event.type,
+                    "data": event.data['text']
                 })
                 send_event(payload)
             case "synthesize":
                 _LOGGER.info(f"Assist responded: {event.data['text']}") # Print response text
                 payload = json.dumps({
-                    event.type: event.data['text']
+                    "event": event.type,
+                    "data": event.data['text']
                 })
                 send_event(payload)
             case "played":
                 _LOGGER.info("Response finished.")
                 payload = json.dumps({
-                    "response_finished": True
+                    "event": "response_finished",
+                    "data": None
+                })
+                send_event(payload)
+            case "error":
+                payload = json.dumps({
+                    "event": "error",
+                    "data": None
                 })
                 send_event(payload)
             case _:

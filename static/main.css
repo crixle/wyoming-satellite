@@ -49,9 +49,9 @@ body {
     font-family: "Figtree";
     display: flex;
     height: 3rem;
-    display: none;
+    display: block;
     transition: width 2s;
-    background: white;
+    background: red;
     padding: 5px 10px;
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -64,7 +64,7 @@ body {
     font-family: "Figtree";
     display: flex;
     margin-top: 15px;
-    height: 3rem;
+    min-height: 3rem;
     display: none;
     transition: width 2s;
     background: rgb(91, 219, 255);

@@ -8,22 +8,16 @@ app = Flask(__name__)
 class App:
     def __init__(self):
         pass
-
-    def postUserInquiry(self, response):
-        print(self.js.newUserRequest(response))
-    def postAssistantResponse(self, response):
-        print(self.js.postAssistantResponse(response))
-    def postSatelliteListeningStart(self):
-        print(self.js.satelliteListeningStart())
+    def postEvent(self, event):
+        print(self.js.processEvent(event))
 
 @app.route('/event', methods=['POST'])
 def handle_post():
     try:
-        raw_data = request.data.decode('utf-8')
-        print("Raw body:", raw_data)
 
         json_data = request.get_json()
-        print("Parsed JSON:", json_data)
+        print(json_data)
+        App.postEvent(json_data)
 
         return jsonify({"received": json_data}), 200
     except Exception as e:
