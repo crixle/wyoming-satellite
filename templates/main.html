@@ -7,11 +7,12 @@
     <body onload="displayTime()">
         <script src="{{ url_for('static', filename='javascript.js') }}"></script>
         <div id="mainWrapper">
+            <div id="topBar">
+                <div id="satelliteStatus"></div>
+                <div id="transcript">Transcript</div> 
+            </div>
             <div id="bottomContent">
-                <div id="satelliteStatus">
-                </div>
                 <div id="dialogueBoxes">
-                    <div id="userRequestTextBox">Long sentence request</div>
                     <div id="assistantResponse">Here's the response</div>
                 </div>
                 <div id="time"></div>

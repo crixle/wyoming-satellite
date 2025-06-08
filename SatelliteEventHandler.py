@@ -11,8 +11,6 @@ import logging
 import time
 import requests
 from functools import partial
-from queue import Queue
-from flask import Flask, jsonify, render_template_string
 from wyoming.event import Event
 from wyoming.server import AsyncEventHandler, AsyncServer
 
@@ -58,6 +56,13 @@ class SatelliteEventHandler(AsyncEventHandler):
                     "data": event.data['text']
                 })
                 send_event(payload)
+            case "voice-stopped":
+                payload = json.dumps({
+                    "event": event.type,
+                    "data": None
+                })
+                send_event(payload)
+
             case "synthesize":
                 _LOGGER.info(f"Assist responded: {event.data['text']}") # Print response text
                 payload = json.dumps({
@@ -70,6 +75,25 @@ class SatelliteEventHandler(AsyncEventHandler):
                 payload = json.dumps({
                     "event": "response_finished",
                     "data": None
+                })
+                send_event(payload)
+            case "timer-started":
+                payload = json.dumps({
+                    "event": "timer-started",
+                    "data": event.data['total_seconds'],
+                    "id": event.data['id']
+                })
+                send_event(payload)
+            case "timer-finished":
+                payload = json.dumps({
+                    "event": "timer-finished",
+                    "id": event.data['id']
+                })
+                send_event(payload)
+            case "timer-cancelled":
+                payload = json.dumps({
+                    "event": "timer-cancelled",
+                    "data": event.data['id']
                 })
                 send_event(payload)
             case "error":
