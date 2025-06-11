@@ -73,7 +73,7 @@ async function processEvent(request){
     case "detection":
       clearScreen()
       topBar.style.transform = "translateY(0vh)";
-      satelliteIcon.style.background = "lime";
+      satelliteIcon.style.background = "rgba(0, 255, 16, 0.5)";
       satelliteIcon.style.animation = "1s linear pulse infinite";
       return "Success"
     case "transcript":
