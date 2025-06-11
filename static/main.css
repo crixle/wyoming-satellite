@@ -102,8 +102,9 @@ body {
 }
 
 #topBar {
+    backdrop-filter: blur(12.2px);
     height: 10vh;
-    background: white;
+    background: rgba(255, 255, 255, 0.31);
     line-height: 10vh;
     font-size: 30px;
     font-family: Figtree;
@@ -113,6 +114,8 @@ body {
     display: flex;
     transform: translateY(-11vh);
     transition: transform 0.5s;
+    -webkit-backdrop-filter: blur(12.2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #topBar #transcript {
